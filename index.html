@@ -31,7 +31,6 @@
             <label for="dob" class="required-field">Date of Birth:</label>
             <input type="date" id="dob" name="Date_of_Birth" required max="2007-01-01">
             <div class="error" id="dobError"></div>
-            <small>For older dates that are difficult to select on mobile, you can type the date directly in YYYY-MM-DD format</small>
         </div>
         <div class="form-group">
             <label for="contactNumber" class="required-field">Contact Number:</label>
@@ -225,21 +224,54 @@
         </div>
         <div class="form-group">
             <label>Please indicate which documents you can provide for the Right to Rent check:</label>
+            
+            <h4>For British and Irish Citizens:</h4>
             <div class="checkbox-group">
-                <input type="checkbox" id="ukPassport" name="Right_to_Rent_Documents" value="UK/EEA/Swiss Passport">
-                <label class="checkbox-label" for="ukPassport">UK/EEA/Swiss Passport</label>
+                <input type="checkbox" id="ukPassport" name="Right_to_Rent_Documents" value="UK Passport">
+                <label class="checkbox-label" for="ukPassport">British passport (current or expired)</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="irishPassport" name="Right_to_Rent_Documents" value="Irish Passport">
+                <label class="checkbox-label" for="irishPassport">Irish passport or passport card</label>
             </div>
             <div class="checkbox-group">
                 <input type="checkbox" id="ukBirth" name="Right_to_Rent_Documents" value="UK Birth Certificate + Photo ID">
-                <label class="checkbox-label" for="ukBirth">UK Birth Certificate + Photo ID</label>
+                <label class="checkbox-label" for="ukBirth">UK Driving Licence with birth certificate</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="regCert" name="Right_to_Rent_Documents" value="Certificate of Registration/Naturalisation">
+                <label class="checkbox-label" for="regCert">Certificate of Registration or Naturalisation</label>
+            </div>
+            
+            <h4>For Non-British Citizens:</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" id="euPassport" name="Right_to_Rent_Documents" value="EU/EEA Passport">
+                <label class="checkbox-label" for="euPassport">EU/EEA passport</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="nonEuPassport" name="Right_to_Rent_Documents" value="Non-EU/EEA Passport">
+                <label class="checkbox-label" for="nonEuPassport">Non-EU/EEA passport with valid visa</label>
             </div>
             <div class="checkbox-group">
                 <input type="checkbox" id="brp" name="Right_to_Rent_Documents" value="Biometric Residence Permit (BRP)">
                 <label class="checkbox-label" for="brp">Biometric Residence Permit (BRP)</label>
             </div>
             <div class="checkbox-group">
-                <input type="checkbox" id="immigrationDoc" name="Right_to_Rent_Documents" value="Immigration Status Document">
-                <label class="checkbox-label" for="immigrationDoc">Immigration Status Document</label>
+                <input type="checkbox" id="residenceCard" name="Right_to_Rent_Documents" value="Permanent Residence Card">
+                <label class="checkbox-label" for="residenceCard">Permanent Residence Card</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="eueaIdCard" name="Right_to_Rent_Documents" value="EU/EEA ID Card">
+                <label class="checkbox-label" for="eueaIdCard">EU/EEA ID Card</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="immigrationDoc" name="Right_to_Rent_Documents" value="Home Office Immigration Status Document">
+                <label class="checkbox-label" for="immigrationDoc">Home Office Immigration Status Document</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="shareCode" name="Right_to_Rent_Documents" value="Share Code">
+                <label class="checkbox-label" for="shareCode">Home Office Share Code</label>
+                <input type="text" id="shareCodeValue" name="Share_Code_Value" placeholder="Enter share code if applicable" style="width: 60%; margin-left: 10px;">
             </div>
             <div class="checkbox-group">
                 <input type="checkbox" id="otherDoc" name="Right_to_Rent_Documents" value="Other">
@@ -305,7 +337,7 @@
             <div class="additional-applicants">
                 <div class="applicant-row">
                     <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
-                    <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]">
+                    <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]" class="enhanced">
                     <select name="Additional_Applicant_Type[]">
                         <option value="">-- Select Type --</option>
                         <option value="tenant">Tenant (adult on tenancy agreement)</option>

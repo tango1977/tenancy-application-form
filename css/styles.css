@@ -160,12 +160,36 @@ button:hover {
     min-width: 100px;
 }
 
-/* Make the date selector components more visible on mobile */
-small {
+/* Manual date input styles */
+.manual-date-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px; /* Prevents zoom on iOS */
+}
+
+.date-helper {
     display: block;
     margin-top: 5px;
     margin-bottom: 8px;
     color: #666;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* Right to Rent section styling */
+.form-group h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 1.1em;
+}
+
+/* Add more space between the checkbox groups */
+.checkbox-group {
+    margin-bottom: 10px;
 }
 
 /* Mobile responsiveness */
@@ -212,5 +236,16 @@ small {
     
     .date-selects-container select {
         width: 100%;
+    }
+    
+    /* Make checkboxes easier to tap on mobile */
+    .checkbox-group input[type="checkbox"] {
+        height: 20px;
+        width: 20px;
+    }
+    
+    /* Improve spacing for mobile */
+    .checkbox-group {
+        padding: 8px 0;
     }
 }
