@@ -133,41 +133,45 @@ function convertToISODate(dateString) {
 }
 
 // Process additional occupant DOB fields
-function processAdditionalOccupantDOB() {
-    const additionalDOBInputs = document.querySelectorAll('.additional-dob');
-    additionalDOBInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            // Validate the date format
-            const dateValue = this.value.trim();
-            if (dateValue && !isValidDateFormat(dateValue)) {
-                // Add error styling
-                this.style.borderColor = 'red';
-                
-                // Create or update error message
-                let errorMsg = this.parentNode.querySelector('.dob-error');
-                if (!errorMsg) {
-                    errorMsg = document.createElement('small');
-                    errorMsg.className = 'dob-error';
-                    errorMsg.style.color = 'red';
-                    this.parentNode.insertBefore(errorMsg, this.nextSibling);
-                }
-                errorMsg.textContent = 'Please use DD/MM/YYYY format';
-            } else {
-                // Remove error styling
-                this.style.borderColor = '';
-                const errorMsg = this.parentNode.querySelector('.dob-error');
-                if (errorMsg) {
-                    errorMsg.remove();
-                }
-            }
-        });
+function setupDOBValidationListeners() {
+    const dobInputs = document.querySelectorAll('.text-only-date');
+    dobInputs.forEach(input => {
+        // Remove any existing listeners to avoid duplicates
+        input.removeEventListener('blur', validateDOBField);
+        input.addEventListener('blur', validateDOBField);
     });
+}
+
+// Validation function for DOB fields
+function validateDOBField() {
+    const dateValue = this.value.trim();
+    if (dateValue && !isValidDateFormat(dateValue)) {
+        // Add error styling
+        this.style.borderColor = 'red';
+        
+        // Create or update error message
+        let errorMsg = this.parentNode.querySelector('.dob-error');
+        if (!errorMsg) {
+            errorMsg = document.createElement('small');
+            errorMsg.className = 'dob-error';
+            errorMsg.style.color = 'red';
+            this.parentNode.insertBefore(errorMsg, this.nextSibling);
+        }
+        errorMsg.textContent = 'Please use DD/MM/YYYY format';
+    } else {
+        // Remove error styling
+        this.style.borderColor = '';
+        const errorMsg = this.parentNode.querySelector('.dob-error');
+        if (errorMsg) {
+            errorMsg.remove();
+        }
+    }
 }
 
 // Validate date format DD/MM/YYYY
 function isValidDateFormat(dateStr) {
-    // Regex for DD/MM/YYYY format
-    const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+    // Regex for DD/MM/YYYY format (allows for single digits too like 1/2/2023)
+    const dateRegex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
     
     if (!dateRegex.test(dateStr)) {
         return false;
@@ -178,6 +182,11 @@ function isValidDateFormat(dateStr) {
     const day = parseInt(parts[0], 10);
     const month = parseInt(parts[1], 10);
     const year = parseInt(parts[2], 10);
+    
+    // Basic range validation
+    if (day < 1 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+        return false;
+    }
     
     // Check month has correct number of days
     const daysInMonth = new Date(year, month, 0).getDate();
@@ -205,8 +214,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhance date inputs
     enhanceDateInputs();
     
-    // Process additional occupant DOB fields for manual text entry
-    processAdditionalOccupantDOB();
+    // Set up validation for DOB text fields
+    setupDOBValidationListeners();
     
     // Set up a mutation observer to monitor for dynamically added date inputs
     const observer = new MutationObserver(function(mutations) {
@@ -216,12 +225,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const dateInputs = mutation.target.querySelectorAll('input[type="date"]:not(.enhanced)');
                 if (dateInputs.length > 0) {
                     enhanceDateInputs();
-                }
-                
-                // Process any newly added additional occupant DOB fields
-                const additionalDOBInputs = mutation.target.querySelectorAll('.additional-dob');
-                if (additionalDOBInputs.length > 0) {
-                    processAdditionalOccupantDOB();
                 }
             }
         });
@@ -304,7 +307,7 @@ function addApplicant() {
     newRow.className = 'applicant-row';
     newRow.innerHTML = `
         <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
-        <input type="text" placeholder="Date of Birth (DD/MM/YYYY)" name="Additional_Applicant_DOB[]" class="manual-date-input additional-dob">
+        <input type="text" placeholder="Date of Birth (DD/MM/YYYY)" name="Additional_Applicant_DOB[]" class="text-only-date">
         <select name="Additional_Applicant_Type[]">
             <option value="">-- Select Type --</option>
             <option value="tenant">Tenant (adult on tenancy agreement)</option>
@@ -318,8 +321,8 @@ function addApplicant() {
     `;
     container.appendChild(newRow);
     
-    // Process the new additional DOB field
-    processAdditionalOccupantDOB();
+    // Set up validation for the new DOB field
+    setupDOBValidationListeners();
 }
 
 function removeApplicant(button) {
@@ -382,7 +385,7 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
             isValid = false;
         }
     } else if (employmentStatus === 'Not working' || employmentStatus === 'Domestic worker/House wife') {
-        // Validate character reference for non-working or house wife
+        // Validate character reference for non-working or domestic worker/house wife
         if (document.getElementById('characterReference') && 
             document.getElementById('characterReference').hasAttribute('required') && 
             !document.getElementById('characterReference').value.trim()) {
@@ -428,12 +431,13 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
         isValid = false;
     }
 
-    // Validate additional occupant DOB fields
-    const additionalDOBInputs = document.querySelectorAll('.additional-dob');
-    additionalDOBInputs.forEach(input => {
-        if (input.value && !isValidDateFormat(input.value)) {
+    // DOB validation for additional occupant fields
+    document.querySelectorAll('.text-only-date').forEach(input => {
+        const dateValue = input.value.trim();
+        if (dateValue && !isValidDateFormat(dateValue)) {
             input.style.borderColor = 'red';
-            // Create or update error message if not already present
+            
+            // Create or update error message
             let errorMsg = input.parentNode.querySelector('.dob-error');
             if (!errorMsg) {
                 errorMsg = document.createElement('small');
@@ -451,7 +455,7 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
         // Scroll to the first error
-        const firstError = document.querySelector('.error:not(:empty)');
+        const firstError = document.querySelector('.error:not(:empty)') || document.querySelector('.dob-error');
         if (firstError) {
             firstError.scrollIntoView({behavior: 'smooth', block: 'center'});
         }

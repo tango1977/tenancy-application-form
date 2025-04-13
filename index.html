@@ -76,7 +76,7 @@
                 <option value="12 months">12 months</option>
                 <option value="24 months">24 months</option>
                 <option value="36 months">36 months</option>
-                <option value="longer">Longer than 36 months</option>
+                <option value="longer than 36 months">Longer than 36 months</option>
             </select>
             <div class="error" id="desiredTenancyLengthError"></div>
         </div>
@@ -93,6 +93,7 @@
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Full-time" required> Full-time</label>
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Part-time"> Part-time</label>
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Self-employed"> Self-employed</label>
+                <label class="radio-label"><input type="radio" name="Employment_Status" value="Domestic worker/House wife"> Domestic worker/House wife</label>
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Student"> Student</label>
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Not working"> Not working</label>
             </div>
@@ -394,7 +395,8 @@
             <div class="additional-applicants">
                 <div class="applicant-row">
                     <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
-                    <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]" class="enhanced">
+                    <!-- Using pure text input for DOB -->
+                    <input type="text" placeholder="Date of Birth (DD/MM/YYYY)" name="Additional_Applicant_DOB[]" class="text-only-date">
                     <select name="Additional_Applicant_Type[]">
                         <option value="">-- Select Type --</option>
                         <option value="tenant">Tenant (adult on tenancy agreement)</option>
