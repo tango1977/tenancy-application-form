@@ -12,14 +12,17 @@
     
     <p class="required-text">Fields marked with an asterisk (*) are mandatory</p>
 
-    <form id="tenancyForm" action="https://formsubmit.co/fmeah71@gmail.com" method="POST">
+    <<form id="tenancyForm" action="https://formsubmit.co/fmeah71@gmail.com" method="POST" enctype="multipart/form-data">
         <!-- FormSubmit configuration fields -->
         <input type="text" name="_honey" style="display:none">
         <input type="hidden" name="_captcha" value="false">
+        
         <input type="hidden" name="_next" value="https://formsubmit.co/thank-you/">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_format" value="plain">
         <input type="hidden" name="_method" value="POST">
+        <!-- Add this inside your form -->
+        <input type="hidden" name="_formsubmit_id" value="tenancy-application-form">
 
         <h2>1. Applicant Details</h2>
         <div class="form-group">

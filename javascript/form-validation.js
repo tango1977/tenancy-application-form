@@ -1,4 +1,13 @@
 // Show/hide sections based on selections
+
+
+// Add this to your form-validation.js file
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('tenancyForm');
+    form.setAttribute('method', 'POST'); // Ensure method is POST
+});
+
+
 document.querySelectorAll('input[name="Employment_Status"]').forEach(radio => {
     radio.addEventListener('change', function() {
         const selfEmployedSection = document.getElementById('selfEmployedSection');
