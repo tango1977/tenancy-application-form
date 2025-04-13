@@ -192,6 +192,11 @@ button:hover {
     margin-bottom: 10px;
 }
 
+/* DSS Income section styling */
+#notWorkingSection .checkbox-group {
+    margin-left: 20px;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 600px) {
     body {
@@ -247,5 +252,19 @@ button:hover {
     /* Improve spacing for mobile */
     .checkbox-group {
         padding: 8px 0;
+    }
+    
+    /* Make date inputs more visible on mobile */
+    .manual-date-input {
+        padding: 12px;
+        margin-bottom: 5px;
+        background-color: #f9f9f9;
+    }
+    
+    /* Make helper text more noticeable on mobile */
+    small {
+        font-size: 14px;
+        padding: 5px 0;
+        display: block;
     }
 }

@@ -3,27 +3,42 @@ document.querySelectorAll('input[name="Employment_Status"]').forEach(radio => {
     radio.addEventListener('change', function() {
         const selfEmployedSection = document.getElementById('selfEmployedSection');
         const employedSection = document.getElementById('employedSection');
+        const notWorkingSection = document.getElementById('notWorkingSection');
         const selfEmployedReferences = document.getElementById('selfEmployedReferences');
         const employedReferences = document.getElementById('employedReferences');
+        const notWorkingReferences = document.getElementById('notWorkingReferences');
         
+        // Hide all sections first
+        selfEmployedSection.style.display = 'none';
+        employedSection.style.display = 'none';
+        notWorkingSection.style.display = 'none';
+        selfEmployedReferences.style.display = 'none';
+        employedReferences.style.display = 'none';
+        notWorkingReferences.style.display = 'none';
+        
+        // Remove all required attributes
+        document.getElementById('accountantReference').removeAttribute('required');
+        document.getElementById('employerReference').removeAttribute('required');
+        
+        if (document.getElementById('characterReference')) {
+            document.getElementById('characterReference').removeAttribute('required');
+        }
+        
+        // Show appropriate section based on selection
         if (this.value === 'Self-employed') {
             selfEmployedSection.style.display = 'block';
-            employedSection.style.display = 'none';
             selfEmployedReferences.style.display = 'block';
-            employedReferences.style.display = 'none';
-            
-            // Make accountant reference required instead of employer reference
             document.getElementById('accountantReference').setAttribute('required', '');
-            document.getElementById('employerReference').removeAttribute('required');
+        } else if (this.value === 'Not working') {
+            notWorkingSection.style.display = 'block';
+            notWorkingReferences.style.display = 'block';
+            if (document.getElementById('characterReference')) {
+                document.getElementById('characterReference').setAttribute('required', '');
+            }
         } else {
-            selfEmployedSection.style.display = 'none';
             employedSection.style.display = 'block';
-            selfEmployedReferences.style.display = 'none';
             employedReferences.style.display = 'block';
-            
-            // Make employer reference required instead of accountant reference
             document.getElementById('employerReference').setAttribute('required', '');
-            document.getElementById('accountantReference').removeAttribute('required');
         }
     });
 });
@@ -45,8 +60,11 @@ document.querySelectorAll('input[name="Has_Pets"]').forEach(radio => {
 // Add text fields for manual date entry
 function enhanceDateInputs() {
     // Add manual text fields for dates
-    const dateInputs = document.querySelectorAll('input[type="date"]');
+    const dateInputs = document.querySelectorAll('input[type="date"]:not(.enhanced)');
     dateInputs.forEach(input => {
+        // Mark as enhanced to avoid processing again
+        input.classList.add('enhanced');
+        
         // Create a manual text input for dates
         const textInput = document.createElement('input');
         textInput.type = 'text';
@@ -54,10 +72,10 @@ function enhanceDateInputs() {
         textInput.className = 'manual-date-input';
         textInput.id = input.id + '_text';
         
-        // Add helper text
+        // Add helper text (only once)
         const helper = document.createElement('small');
         helper.className = 'date-helper';
-        helper.innerHTML = 'Type date in DD/MM/YYYY format for easier entry';
+        helper.innerHTML = 'Type date in DD/MM/YYYY format';
         
         // Check if we're on mobile
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -85,56 +103,6 @@ function enhanceDateInputs() {
             input.parentNode.insertBefore(helper, input.nextSibling);
         }
     });
-    
-    // Watch for dynamically added date inputs
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.type === 'childList') {
-                const dateInputs = mutation.target.querySelectorAll('input[type="date"]:not(.enhanced)');
-                dateInputs.forEach(input => {
-                    input.classList.add('enhanced');
-                    
-                    // Create a manual text input for dates
-                    const textInput = document.createElement('input');
-                    textInput.type = 'text';
-                    textInput.placeholder = 'Enter date as DD/MM/YYYY';
-                    textInput.className = 'manual-date-input';
-                    
-                    // Add helper text
-                    const helper = document.createElement('small');
-                    helper.className = 'date-helper';
-                    helper.innerHTML = 'Type date in DD/MM/YYYY format for easier entry';
-                    
-                    // Check if we're on mobile
-                    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                    
-                    if (isMobile) {
-                        // On mobile, hide the date picker and show text input
-                        input.style.display = 'none';
-                        
-                        // Insert the text input and helper
-                        input.parentNode.insertBefore(textInput, input);
-                        input.parentNode.insertBefore(helper, input);
-                        
-                        // Set up validation and syncing
-                        textInput.addEventListener('change', function() {
-                            const dateValue = convertToISODate(this.value);
-                            if (dateValue) {
-                                input.value = dateValue;
-                            } else if (this.value.trim() !== '') {
-                                helper.innerHTML = 'Please use DD/MM/YYYY format (e.g., 15/04/1985)';
-                                helper.style.color = 'red';
-                            }
-                        });
-                    } else {
-                        // On desktop, keep the date picker visible with a helper
-                        input.parentNode.insertBefore(helper, input.nextSibling);
-                    }
-                });
-            }
-        });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
 }
 
 // Helper function to convert DD/MM/YYYY to YYYY-MM-DD
@@ -165,7 +133,14 @@ function convertToISODate(dateString) {
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('selfEmployedSection').style.display = 'none';
     document.getElementById('employedSection').style.display = 'none';
+    document.getElementById('notWorkingSection').style.display = 'none';
     document.getElementById('selfEmployedReferences').style.display = 'none';
+    document.getElementById('employedReferences').style.display = 'none';
+    
+    if (document.getElementById('notWorkingReferences')) {
+        document.getElementById('notWorkingReferences').style.display = 'none';
+    }
+    
     document.getElementById('occupantsSection').style.display = 'none';
     document.getElementById('petsSection').style.display = 'none';
     
@@ -174,6 +149,20 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Enhance date inputs
     enhanceDateInputs();
+    
+    // Set up a mutation observer to monitor for dynamically added date inputs
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                // Find all new date inputs and enhance them
+                const dateInputs = mutation.target.querySelectorAll('input[type="date"]:not(.enhanced)');
+                if (dateInputs.length > 0) {
+                    enhanceDateInputs();
+                }
+            }
+        });
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
 });
 
 function setupEventListeners() {
@@ -182,27 +171,47 @@ function setupEventListeners() {
         radio.addEventListener('change', function() {
             const selfEmployedSection = document.getElementById('selfEmployedSection');
             const employedSection = document.getElementById('employedSection');
+            const notWorkingSection = document.getElementById('notWorkingSection');
             const selfEmployedReferences = document.getElementById('selfEmployedReferences');
             const employedReferences = document.getElementById('employedReferences');
+            const notWorkingReferences = document.getElementById('notWorkingReferences');
             
+            // Hide all sections first
+            selfEmployedSection.style.display = 'none';
+            employedSection.style.display = 'none';
+            notWorkingSection.style.display = 'none';
+            selfEmployedReferences.style.display = 'none';
+            employedReferences.style.display = 'none';
+            
+            if (notWorkingReferences) {
+                notWorkingReferences.style.display = 'none';
+            }
+            
+            // Remove all required attributes
+            document.getElementById('accountantReference').removeAttribute('required');
+            document.getElementById('employerReference').removeAttribute('required');
+            
+            if (document.getElementById('characterReference')) {
+                document.getElementById('characterReference').removeAttribute('required');
+            }
+            
+            // Show appropriate section based on selection
             if (this.value === 'Self-employed') {
                 selfEmployedSection.style.display = 'block';
-                employedSection.style.display = 'none';
                 selfEmployedReferences.style.display = 'block';
-                employedReferences.style.display ='none';
-                
-                // Make accountant reference required instead of employer reference
                 document.getElementById('accountantReference').setAttribute('required', '');
-                document.getElementById('employerReference').removeAttribute('required');
+            } else if (this.value === 'Not working') {
+                notWorkingSection.style.display = 'block';
+                if (notWorkingReferences) {
+                    notWorkingReferences.style.display = 'block';
+                    if (document.getElementById('characterReference')) {
+                        document.getElementById('characterReference').setAttribute('required', '');
+                    }
+                }
             } else {
-                selfEmployedSection.style.display = 'none';
                 employedSection.style.display = 'block';
-                selfEmployedReferences.style.display = 'none';
                 employedReferences.style.display = 'block';
-                
-                // Make employer reference required instead of accountant reference
                 document.getElementById('employerReference').setAttribute('required', '');
-                document.getElementById('accountantReference').removeAttribute('required');
             }
         });
     });
@@ -244,6 +253,12 @@ function addApplicant() {
         <button type="button" class="remove-btn" onclick="removeApplicant(this)">Remove</button>
     `;
     container.appendChild(newRow);
+    
+    // Find and enhance the new date input
+    const newDateInput = newRow.querySelector('input[type="date"]');
+    if (newDateInput) {
+        enhanceDateInputs();
+    }
 }
 
 function removeApplicant(button) {
@@ -268,13 +283,13 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
         { id: 'currentAddress', message: 'Current address is required' },
         { id: 'timeAtAddress', message: 'Time at address is required' },
         { id: 'reasonForLeaving', message: 'Reason for leaving is required' },
-        { id: 'landlordContact', message: 'Landlord contact is required' },
-        { id: 'landlordReference', message: 'Landlord reference is required' }
+        { id: 'desiredTenancyLength', message: 'Please indicate your desired tenancy length' }
+        // Landlord contact and reference removed from required fields
     ];
 
     requiredFields.forEach(field => {
         const input = document.getElementById(field.id);
-        if (!input.value.trim()) {
+        if (input && !input.value.trim()) {
             document.getElementById(`${field.id}Error`).textContent = field.message;
             isValid = false;
         }
@@ -296,17 +311,27 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
         }
     });
 
-    // Conditional field validation
+    // Conditional field validation based on employment status
     const employmentStatus = document.querySelector('input[name="Employment_Status"]:checked')?.value;
     if (employmentStatus === 'Self-employed') {
         // Validate accountant reference for self-employed
-        if (!document.getElementById('accountantReference').value.trim()) {
+        if (document.getElementById('accountantReference').hasAttribute('required') && 
+            !document.getElementById('accountantReference').value.trim()) {
             document.getElementById('accountantReferenceError').textContent = 'Accountant reference is required for self-employed applicants';
             isValid = false;
         }
-    } else if (employmentStatus) {
-        // Validate employer reference for other employment statuses
-        if (!document.getElementById('employerReference').value.trim()) {
+    } else if (employmentStatus === 'Not working') {
+        // Validate character reference for non-working
+        if (document.getElementById('characterReference') && 
+            document.getElementById('characterReference').hasAttribute('required') && 
+            !document.getElementById('characterReference').value.trim()) {
+            document.getElementById('characterReferenceError').textContent = 'Character reference is required';
+            isValid = false;
+        }
+    } else if (employmentStatus && employmentStatus !== 'Not working') {
+        // Validate employer reference for other employment statuses (except Not working)
+        if (document.getElementById('employerReference').hasAttribute('required') && 
+            !document.getElementById('employerReference').value.trim()) {
             document.getElementById('employerReferenceError').textContent = 'Employer reference is required';
             isValid = false;
         }
@@ -358,15 +383,24 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('tenancyForm');
     form.addEventListener('submit', function() {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-        checkboxes.forEach(checkbox => {
-            if (checkbox.name === 'Right_to_Rent_Documents') {
-                const hiddenField = document.createElement('input');
-                hiddenField.type = 'hidden';
-                hiddenField.name = 'Selected_Documents[]';
-                hiddenField.value = checkbox.value;
-                form.appendChild(hiddenField);
-            }
+        // Handle Right to Rent Documents
+        const rightToRentCheckboxes = document.querySelectorAll('input[name="Right_to_Rent_Documents"]:checked');
+        rightToRentCheckboxes.forEach(checkbox => {
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = 'Selected_Documents[]';
+            hiddenField.value = checkbox.value;
+            form.appendChild(hiddenField);
+        });
+        
+        // Handle Income Sources for not working
+        const incomeSourceCheckboxes = document.querySelectorAll('input[name="Income_Source"]:checked');
+        incomeSourceCheckboxes.forEach(checkbox => {
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = 'Selected_Income_Sources[]';
+            hiddenField.value = checkbox.value;
+            form.appendChild(hiddenField);
         });
     });
 });

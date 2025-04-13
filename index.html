@@ -69,9 +69,21 @@
             <input type="number" id="currentRent" name="Current_Rent_Monthly" placeholder="£ per month">
         </div>
         <div class="form-group">
-            <label for="landlordContact" class="required-field">Current Landlord/Agent Name & Contact Details:</label>
-            <input type="text" id="landlordContact" name="Current_Landlord_Contact" required>
-            <div class="error" id="landlordContactError"></div>
+            <label for="desiredTenancyLength" class="required-field">How long are you looking to rent for?</label>
+            <select id="desiredTenancyLength" name="Desired_Tenancy_Length" required>
+                <option value="">-- Please select --</option>
+                <option value="6 months">6 months</option>
+                <option value="12 months">12 months</option>
+                <option value="18 months">18 months</option>
+                <option value="24 months">24 months</option>
+                <option value="longer">Longer than 24 months</option>
+            </select>
+            <div class="error" id="desiredTenancyLengthError"></div>
+        </div>
+        <div class="form-group">
+            <label for="landlordContact">Current Landlord/Agent Name & Contact Details:</label>
+            <input type="text" id="landlordContact" name="Current_Landlord_Contact">
+            <small>If this is your first tenancy, you can leave this blank.</small>
         </div>
 
         <h2>3. Employment Details</h2>
@@ -82,6 +94,7 @@
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Part-time"> Part-time</label>
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Self-employed"> Self-employed</label>
                 <label class="radio-label"><input type="radio" name="Employment_Status" value="Student"> Student</label>
+                <label class="radio-label"><input type="radio" name="Employment_Status" value="Not working"> Not working</label>
             </div>
             <div class="error" id="employmentStatusError"></div>
         </div>
@@ -124,6 +137,41 @@
             </div>
             <div class="form-group">
                 <label>Please attach recent tax returns or SA302s if available (you can email these separately).</label>
+            </div>
+        </div>
+        
+        <div id="notWorkingSection" style="display: none;">
+            <div class="form-group">
+                <label>Please select your source(s) of income:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="universalCredit" name="Income_Source" value="Universal Credit">
+                    <label class="checkbox-label" for="universalCredit">Universal Credit</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="housingBenefit" name="Income_Source" value="Housing Benefit">
+                    <label class="checkbox-label" for="housingBenefit">Housing Benefit</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="jobSeekers" name="Income_Source" value="Jobseeker's Allowance">
+                    <label class="checkbox-label" for="jobSeekers">Jobseeker's Allowance</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="disability" name="Income_Source" value="Disability Benefits">
+                    <label class="checkbox-label" for="disability">Disability Benefits</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="pension" name="Income_Source" value="Pension">
+                    <label class="checkbox-label" for="pension">Pension</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="otherBenefits" name="Income_Source" value="Other Benefits">
+                    <label class="checkbox-label" for="otherBenefits">Other Benefits</label>
+                    <input type="text" id="otherBenefitsDetail" name="Other_Benefits_Detail" placeholder="Please specify" style="width: 60%; margin-left: 10px;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="totalMonthlyBenefits">Total Monthly Benefits (£):</label>
+                <input type="number" id="totalMonthlyBenefits" name="Total_Monthly_Benefits">
             </div>
         </div>
 
@@ -189,16 +237,16 @@
 
         <h2>7. References</h2>
         <div class="form-group">
-            <label for="landlordReference" class="required-field">Landlord Reference (for character reference purposes):</label>
-            <input type="text" id="landlordReference" name="Landlord_Reference" required>
+            <label for="landlordReference">Landlord Reference (for character reference purposes):</label>
+            <input type="text" id="landlordReference" name="Landlord_Reference">
             <div class="error" id="landlordReferenceError"></div>
-            <small>Please provide the name and contact details of someone who can verify your history as a tenant.</small>
+            <small>Please provide the name and contact details of someone who can verify your history as a tenant. If this is your first tenancy, you can leave this blank.</small>
         </div>
         
         <div id="employedReferences">
             <div class="form-group">
                 <label for="employerReference" class="required-field">Employer Reference (for income verification):</label>
-                <input type="text" id="employerReference" name="Employer_Reference" required>
+                <input type="text" id="employerReference" name="Employer_Reference">
                 <div class="error" id="employerReferenceError"></div>
                 <small>Please provide the name and contact details of someone who can verify your employment and income.</small>
             </div>
@@ -210,6 +258,15 @@
                 <input type="text" id="accountantReference" name="Accountant_Reference">
                 <div class="error" id="accountantReferenceError"></div>
                 <small>Please provide the name and contact details of your accountant who can verify your self-employed income.</small>
+            </div>
+        </div>
+        
+        <div id="notWorkingReferences" style="display: none;">
+            <div class="form-group">
+                <label for="characterReference" class="required-field">Character Reference:</label>
+                <input type="text" id="characterReference" name="Character_Reference">
+                <div class="error" id="characterReferenceError"></div>
+                <small>Please provide the name and contact details of someone who can provide a character reference (e.g., previous employer, professional, or family friend).</small>
             </div>
         </div>
 
