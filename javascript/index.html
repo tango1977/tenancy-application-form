@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenancy Application Questionnaire (UK)</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>TENANCY APPLICATION QUESTIONNAIRE</h1>
+    <p style="text-align: center;">(For Prospective Tenants – UK)</p>
+    
+    <p class="required-text">Fields marked with an asterisk (*) are mandatory</p>
+
+    <form id="tenancyForm" action="https://formsubmit.co/fmeah71@gmail.com" method="POST">
+        <!-- FormSubmit configuration fields -->
+        <input type="text" name="_honey" style="display:none">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://formsubmit.co/thank-you/">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_format" value="plain">
+        <input type="hidden" name="_method" value="POST">
+
+        <h2>1. Applicant Details</h2>
+        <div class="form-group">
+            <label for="fullName" class="required-field">Full Name:</label>
+            <input type="text" id="fullName" name="Full_Name" required>
+            <div class="error" id="fullNameError"></div>
+        </div>
+        <div class="form-group">
+            <label for="dob" class="required-field">Date of Birth:</label>
+            <input type="date" id="dob" name="Date_of_Birth" required max="2007-01-01">
+            <div class="error" id="dobError"></div>
+        </div>
+        <div class="form-group">
+            <label for="contactNumber" class="required-field">Contact Number:</label>
+            <input type="tel" id="contactNumber" name="Contact_Number" required>
+            <div class="error" id="contactNumberError"></div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="required-field">Email Address:</label>
+            <input type="email" id="email" name="Email_Address" required>
+            <div class="error" id="emailError"></div>
+        </div>
+        <div class="form-group">
+            <label for="nationality" class="required-field">Nationality:</label>
+            <input type="text" id="nationality" name="Nationality" required>
+            <div class="error" id="nationalityError"></div>
+        </div>
+
+        <h2>2. Current Address</h2>
+        <div class="form-group">
+            <label for="currentAddress" class="required-field">Address:</label>
+            <textarea id="currentAddress" name="Current_Address" rows="3" required></textarea>
+            <div class="error" id="currentAddressError"></div>
+        </div>
+        <div class="form-group">
+            <label for="timeAtAddress" class="required-field">Time at this address (years/months):</label>
+            <input type="text" id="timeAtAddress" name="Time_at_Address" placeholder="e.g., 2 years, 6 months" required>
+            <div class="error" id="timeAtAddressError"></div>
+        </div>
+        <div class="form-group">
+            <label for="reasonForLeaving" class="required-field">Reason for leaving:</label>
+            <input type="text" id="reasonForLeaving" name="Reason_for_Leaving" required>
+            <div class="error" id="reasonForLeavingError"></div>
+        </div>
+        <div class="form-group">
+            <label for="currentRent">Current rent (if applicable):</label>
+            <input type="number" id="currentRent" name="Current_Rent_Monthly" placeholder="£ per month">
+        </div>
+        <div class="form-group">
+            <label for="desiredTenancyLength" class="required-field">How long are you looking to rent for?</label>
+            <select id="desiredTenancyLength" name="Desired_Tenancy_Length" required>
+                <option value="">-- Please select --</option>
+                <option value="6 months">6 months</option>
+                <option value="12 months">12 months</option>
+                <option value="24 months">24 months</option>
+                <option value="36 months">36 months</option>
+                <option value="longer">Longer than 36 months</option>
+            </select>
+            <div class="error" id="desiredTenancyLengthError"></div>
+        </div>
+        <div class="form-group">
+            <label for="landlordContact">Current Landlord/Agent Name & Contact Details:</label>
+            <input type="text" id="landlordContact" name="Current_Landlord_Contact">
+            <small>If this is your first tenancy, you can leave this blank.</small>
+        </div>
+
+        <h2>3. Employment Details</h2>
+        <div class="form-group">
+            <label class="required-field">Employment Status:</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="Employment_Status" value="Full-time" required> Full-time</label>
+                <label class="radio-label"><input type="radio" name="Employment_Status" value="Part-time"> Part-time</label>
+                <label class="radio-label"><input type="radio" name="Employment_Status" value="Self-employed"> Self-employed</label>
+                <label class="radio-label"><input type="radio" name="Employment_Status" value="Student"> Student</label>
+                <label class="radio-label"><input type="radio" name="Employment_Status" value="Not working"> Not working</label>
+            </div>
+            <div class="error" id="employmentStatusError"></div>
+        </div>
+        
+        <div id="employedSection">
+            <div class="form-group">
+                <label for="employerName">Employer Name:</label>
+                <input type="text" id="employerName" name="Employer_Name">
+            </div>
+            <div class="form-group">
+                <label for="jobTitle">Job Title:</label>
+                <input type="text" id="jobTitle" name="Job_Title">
+            </div>
+            <div class="form-group">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="Employment_Start_Date">
+            </div>
+            <div class="form-group">
+                <label for="salary">Salary (£ per annum):</label>
+                <input type="number" id="salary" name="Annual_Salary" step="1">
+            </div>
+            <div class="form-group">
+                <label for="employerContact">Employer Contact:</label>
+                <input type="text" id="employerContact" name="Employer_Contact">
+            </div>
+        </div>
+
+        <div id="selfEmployedSection" style="display: none;">
+            <div class="form-group">
+                <label for="businessNature">Nature of Business:</label>
+                <input type="text" id="businessNature" name="Business_Nature">
+            </div>
+            <div class="form-group">
+                <label for="accountantContact">Accountant's Contact (if applicable):</label>
+                <input type="text" id="accountantContact" name="Accountant_Contact">
+            </div>
+            <div class="form-group">
+                <label for="annualIncome">Annual Income (last 2 years):</label>
+                <input type="text" id="annualIncome" name="Annual_Income_Self_Employed">
+            </div>
+            <div class="form-group">
+                <label>Please attach recent tax returns or SA302s if available (you can email these separately).</label>
+            </div>
+        </div>
+        
+        <div id="notWorkingSection" style="display: none;">
+            <div class="form-group">
+                <label>Please select your source(s) of income:</label>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="universalCredit" name="Income_Source" value="Universal Credit">
+                    <label class="checkbox-label" for="universalCredit">Universal Credit</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="housingBenefit" name="Income_Source" value="Housing Benefit">
+                    <label class="checkbox-label" for="housingBenefit">Housing Benefit</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="jobSeekers" name="Income_Source" value="Jobseeker's Allowance">
+                    <label class="checkbox-label" for="jobSeekers">Jobseeker's Allowance</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="disability" name="Income_Source" value="Disability Benefits">
+                    <label class="checkbox-label" for="disability">Disability Benefits</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="pension" name="Income_Source" value="Pension">
+                    <label class="checkbox-label" for="pension">Pension</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="otherBenefits" name="Income_Source" value="Other Benefits">
+                    <label class="checkbox-label" for="otherBenefits">Other Benefits</label>
+                    <input type="text" id="otherBenefitsDetail" name="Other_Benefits_Detail" placeholder="Please specify" style="width: 60%; margin-left: 10px;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="totalMonthlyBenefits">Total Monthly Benefits (£):</label>
+                <input type="number" id="totalMonthlyBenefits" name="Total_Monthly_Benefits">
+            </div>
+        </div>
+
+        <h2>4. Guarantor (if applicable)</h2>
+        <div class="form-group">
+            <label for="guarantorName">Full Name:</label>
+            <input type="text" id="guarantorName" name="Guarantor_Name">
+        </div>
+        <div class="form-group">
+            <label for="guarantorAddress">Address:</label>
+            <textarea id="guarantorAddress" name="Guarantor_Address" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="guarantorIncome">Annual Income (£):</label>
+            <input type="number" id="guarantorIncome" name="Guarantor_Annual_Income">
+        </div>
+        <div class="form-group">
+            <label for="guarantorContact">Contact Number:</label>
+            <input type="tel" id="guarantorContact" name="Guarantor_Contact_Number">
+        </div>
+
+        <h2>5. Additional Occupants</h2>
+        <div class="form-group">
+            <label class="required-field">Will anyone else live in the property with you?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="Additional_Occupants" value="Yes" required> Yes</label>
+                <label class="radio-label"><input type="radio" name="Additional_Occupants" value="No"> No</label>
+            </div>
+            <div class="error" id="additionalOccupantsError"></div>
+        </div>
+        <div id="occupantsSection" style="display: none;">
+            <div class="form-group">
+                <label>How many people will be living at the property in total (including yourself)?</label>
+                <div class="occupant-counts">
+                    <div>
+                        <label for="adultCount">Number of adults (18+):</label>
+                        <input type="number" id="adultCount" name="Number_of_Adults" min="1" value="1">
+                    </div>
+                    <div>
+                        <label for="childrenCount">Number of children (under 18):</label>
+                        <input type="number" id="childrenCount" name="Number_of_Children" min="0" value="0">
+                    </div>
+                </div>
+                <div class="error" id="occupantCountError"></div>
+            </div>
+        </div>
+
+        <h2>6. Pets</h2>
+        <div class="form-group">
+            <label class="required-field">Do you have any pets?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="Has_Pets" value="Yes" required> Yes</label>
+                <label class="radio-label"><input type="radio" name="Has_Pets" value="No"> No</label>
+            </div>
+            <div class="error" id="hasPetsError"></div>
+        </div>
+        <div id="petsSection" style="display: none;">
+            <div class="form-group">
+                <label for="petDetails">Please provide brief details:</label>
+                <input type="text" id="petDetails" name="Pet_Details">
+            </div>
+        </div>
+
+        <h2>7. References</h2>
+        <div class="form-group">
+            <label for="landlordReference">Landlord Reference (for character reference purposes):</label>
+            <input type="text" id="landlordReference" name="Landlord_Reference">
+            <div class="error" id="landlordReferenceError"></div>
+            <small>Please provide the name and contact details of someone who can verify your history as a tenant. If this is your first tenancy, you can leave this blank.</small>
+        </div>
+        
+        <div id="employedReferences">
+            <div class="form-group">
+                <label for="employerReference" class="required-field">Employer Reference (for income verification):</label>
+                <input type="text" id="employerReference" name="Employer_Reference">
+                <div class="error" id="employerReferenceError"></div>
+                <small>Please provide the name and contact details of someone who can verify your employment and income.</small>
+            </div>
+        </div>
+        
+        <div id="selfEmployedReferences" style="display: none;">
+            <div class="form-group">
+                <label for="accountantReference" class="required-field">Accountant Reference (for income verification):</label>
+                <input type="text" id="accountantReference" name="Accountant_Reference">
+                <div class="error" id="accountantReferenceError"></div>
+                <small>Please provide the name and contact details of your accountant who can verify your self-employed income.</small>
+            </div>
+        </div>
+        
+        <div id="notWorkingReferences" style="display: none;">
+            <div class="form-group">
+                <label for="characterReference" class="required-field">Character Reference:</label>
+                <input type="text" id="characterReference" name="Character_Reference">
+                <div class="error" id="characterReferenceError"></div>
+                <small>Please provide the name and contact details of someone who can provide a character reference (e.g., previous employer, professional, or family friend).</small>
+            </div>
+        </div>
+
+        <h2>8. Right to Rent in the UK</h2>
+        <div class="form-group">
+            <label class="required-field">Do you have the legal Right to Rent in the UK?</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="Right_to_Rent_in_UK" value="Yes" required> Yes</label>
+                <label class="radio-label"><input type="radio" name="Right_to_Rent_in_UK" value="No"> No</label>
+            </div>
+            <div class="error" id="rightToRentError"></div>
+        </div>
+        <div class="form-group">
+            <label>Please indicate which documents you can provide for the Right to Rent check:</label>
+            
+            <h4>For British and Irish Citizens:</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" id="ukPassport" name="Right_to_Rent_Documents" value="UK Passport">
+                <label class="checkbox-label" for="ukPassport">British passport (current or expired)</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="irishPassport" name="Right_to_Rent_Documents" value="Irish Passport">
+                <label class="checkbox-label" for="irishPassport">Irish passport or passport card</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="ukBirth" name="Right_to_Rent_Documents" value="UK Birth Certificate + Photo ID">
+                <label class="checkbox-label" for="ukBirth">UK Driving Licence with birth certificate</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="regCert" name="Right_to_Rent_Documents" value="Certificate of Registration/Naturalisation">
+                <label class="checkbox-label" for="regCert">Certificate of Registration or Naturalisation</label>
+            </div>
+            
+            <h4>For Non-British Citizens:</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" id="euPassport" name="Right_to_Rent_Documents" value="EU/EEA Passport">
+                <label class="checkbox-label" for="euPassport">EU/EEA passport</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="nonEuPassport" name="Right_to_Rent_Documents" value="Non-EU/EEA Passport">
+                <label class="checkbox-label" for="nonEuPassport">Non-EU/EEA passport with valid visa</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="brp" name="Right_to_Rent_Documents" value="Biometric Residence Permit (BRP)">
+                <label class="checkbox-label" for="brp">Biometric Residence Permit (BRP)</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="residenceCard" name="Right_to_Rent_Documents" value="Permanent Residence Card">
+                <label class="checkbox-label" for="residenceCard">Permanent Residence Card</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="eueaIdCard" name="Right_to_Rent_Documents" value="EU/EEA ID Card">
+                <label class="checkbox-label" for="eueaIdCard">EU/EEA ID Card</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="immigrationDoc" name="Right_to_Rent_Documents" value="Home Office Immigration Status Document">
+                <label class="checkbox-label" for="immigrationDoc">Home Office Immigration Status Document</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="shareCode" name="Right_to_Rent_Documents" value="Share Code">
+                <label class="checkbox-label" for="shareCode">Home Office Share Code</label>
+                <input type="text" id="shareCodeValue" name="Share_Code_Value" placeholder="Enter share code if applicable" style="width: 60%; margin-left: 10px;">
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="otherDoc" name="Right_to_Rent_Documents" value="Other">
+                <label class="checkbox-label" for="otherDoc">Other (please specify):</label>
+                <input type="text" id="otherDocSpecify" name="Other_Document_Specification" style="width: 60%; margin-left: 10px;">
+            </div>
+            <div class="error" id="rightToRentDocumentsError"></div>
+        </div>
+        <div class="notice">
+            <strong>Note:</strong> All tenants aged 18 and over must pass a Right to Rent check before a tenancy begins. You will need to provide original documents that prove your right to live in the UK.
+        </div>
+
+        <h2>9. Consent & Declaration</h2>
+        <div class="form-group">
+            <div class="checkbox-group">
+                <input type="checkbox" id="consentCheck" name="Consent_Given" required>
+                <label class="checkbox-label required-field" for="consentCheck">I declare that the information provided is true and accurate. I give consent for my details to be used for reference, credit checks, and Right to Rent verification as required by UK law.</label>
+            </div>
+            <div class="error" id="consentCheckError"></div>
+        </div>
+        
+        <div class="form-group">
+            <div class="checkbox-group">
+                <input type="checkbox" id="emailConsentCheck" name="Email_Notice_Consent" required>
+                <label class="checkbox-label required-field" for="emailConsentCheck">I consent to receive all legally required notices and documents by email at the email address provided.</label>
+            </div>
+            <div class="error" id="emailConsentCheckError"></div>
+        </div>
+
+        <div class="notice">
+            <h3>Consent to Receive Notices by Email</h3>
+            <p>By submitting this application, you confirm that if your application is successful and you become a tenant, you consent to receive all legally required notices and documents by email. This includes rent increase notices, the "How to Rent" guide, the Gas Safety Certificate, the Energy Performance Certificate, and the Prescribed Information relating to any government-approved tenancy deposit scheme. The email address you provide in this application will be treated as valid for the purpose of serving these notices and documents.</p>
+        </div>
+
+        <div class="notice">
+            <h3>Holding Deposit – Important Notice</h3>
+            <p>By submitting this application, you agree to pay a holding deposit equivalent to one week's rent to reserve the property.</p>
+            <p>In accordance with the Tenant Fees Act 2019, the holding deposit will be refunded or applied to the tenancy agreement, except in the following circumstances where it may be withheld:</p>
+            <ul>
+                <li>You provide false or misleading information</li>
+                <li>You fail a Right to Rent check</li>
+                <li>You withdraw from the property</li>
+                <li>You fail to take reasonable steps to enter into the tenancy</li>
+            </ul>
+            <p><strong>Important:</strong> If false or misleading information is provided unintentionally or is not material, the deposit will not automatically be forfeited.</p>
+            <h4>Examples of False or Misleading Information:</h4>
+            <ul>
+                <li>Claiming a higher income than earned</li>
+                <li>Falsifying employment or landlord details</li>
+                <li>Omitting poor credit history (e.g. CCJs, bankruptcy)</li>
+                <li>Providing fake references</li>
+                <li>Not disclosing occupants</li>
+                <li>Misrepresenting nationality or immigration status</li>
+                <li>Providing false information regarding Right to Rent status</li>
+            </ul>
+        </div>
+
+        <h2>10. All Additional Occupants (Adults and Children)</h2>
+        <div class="notice">
+            <strong>Note:</strong> Each adult applicant (18+) who will be on the tenancy agreement must complete a separate form and will be subject to referencing and Right to Rent checks as required by UK law. Children under 18 will be listed as permitted occupiers and do not need to be on the tenancy agreement.
+        </div>
+        <div id="additionalApplicants">
+            <div class="additional-applicants">
+                <div class="applicant-row">
+                    <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
+                    <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]" class="enhanced">
+                    <select name="Additional_Applicant_Type[]">
+                        <option value="">-- Select Type --</option>
+                        <option value="tenant">Tenant (adult on tenancy agreement)</option>
+                        <option value="permitted_adult">Permitted Occupier (adult)</option>
+                        <option value="permitted_child">Permitted Occupier (child under 18)</option>
+                    </select>
+                    <input type="email" placeholder="Email (if applicable)" name="Additional_Applicant_Email[]">
+                    <input type="tel" placeholder="Phone (if applicable)" name="Additional_Applicant_Phone[]">
+                    <input type="text" placeholder="Relationship to Main Applicant" name="Relationship_to_Main_Applicant[]">
+                    <button type="button" class="remove-btn" onclick="removeApplicant(this)">Remove</button>
+                </div>
+            </div>
+            <button type="button" class="add-btn" onclick="addApplicant()">Add Another Occupant</button>
+        </div>
+
+        <div class="form-group" style="margin-top: 30px;">
+            <button type="submit">Submit Application</button>
+        </div>
+    </form>
+
+    <div id="formSubmissionMessage" style="display: none; margin-top: 20px; padding: 15px; background-color: #dff0d8; border-radius: 4px;"></div>
+
+    <!-- Link to external JavaScript file with defer attribute to ensure proper loading -->
+    <script src="javascript/form-validation.js" defer></script>
+</body>
+</html>
