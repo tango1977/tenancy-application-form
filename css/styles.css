@@ -60,6 +60,7 @@ select {
 }
 .radio-group {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
 .radio-label {
@@ -177,6 +178,19 @@ button:hover {
     color: #666;
     font-style: italic;
     font-size: 0.9em;
+}
+
+/* Date input error style */
+.dob-error {
+    display: block;
+    color: #e74c3c;
+    font-size: 0.9em;
+    margin-top: 3px;
+}
+
+/* Ensure only one helper text appears */
+.date-helper:not(:first-of-type) {
+    display: none;
 }
 
 /* Right to Rent section styling */

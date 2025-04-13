@@ -29,7 +29,7 @@ document.querySelectorAll('input[name="Employment_Status"]').forEach(radio => {
             selfEmployedSection.style.display = 'block';
             selfEmployedReferences.style.display = 'block';
             document.getElementById('accountantReference').setAttribute('required', '');
-        } else if (this.value === 'Not working') {
+        } else if (this.value === 'Not working' || this.value === 'Domestic worker/House wife') {
             notWorkingSection.style.display = 'block';
             notWorkingReferences.style.display = 'block';
             if (document.getElementById('characterReference')) {
@@ -99,8 +99,11 @@ function enhanceDateInputs() {
                 }
             });
         } else {
-            // On desktop, keep the date picker visible with a helper
-            input.parentNode.insertBefore(helper, input.nextSibling);
+            // On desktop, keep the date picker visible with a single helper
+            // Check if a helper already exists to avoid duplicates
+            if (!input.parentNode.querySelector('.date-helper')) {
+                input.parentNode.insertBefore(helper, input.nextSibling);
+            }
         }
     });
 }
@@ -129,6 +132,58 @@ function convertToISODate(dateString) {
     return null;
 }
 
+// Process additional occupant DOB fields
+function processAdditionalOccupantDOB() {
+    const additionalDOBInputs = document.querySelectorAll('.additional-dob');
+    additionalDOBInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            // Validate the date format
+            const dateValue = this.value.trim();
+            if (dateValue && !isValidDateFormat(dateValue)) {
+                // Add error styling
+                this.style.borderColor = 'red';
+                
+                // Create or update error message
+                let errorMsg = this.parentNode.querySelector('.dob-error');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('small');
+                    errorMsg.className = 'dob-error';
+                    errorMsg.style.color = 'red';
+                    this.parentNode.insertBefore(errorMsg, this.nextSibling);
+                }
+                errorMsg.textContent = 'Please use DD/MM/YYYY format';
+            } else {
+                // Remove error styling
+                this.style.borderColor = '';
+                const errorMsg = this.parentNode.querySelector('.dob-error');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+            }
+        });
+    });
+}
+
+// Validate date format DD/MM/YYYY
+function isValidDateFormat(dateStr) {
+    // Regex for DD/MM/YYYY format
+    const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+    
+    if (!dateRegex.test(dateStr)) {
+        return false;
+    }
+    
+    // Further validate the date is real
+    const parts = dateStr.split('/');
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const year = parseInt(parts[2], 10);
+    
+    // Check month has correct number of days
+    const daysInMonth = new Date(year, month, 0).getDate();
+    return day <= daysInMonth;
+}
+
 // Initially hide sections
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('selfEmployedSection').style.display = 'none';
@@ -150,6 +205,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhance date inputs
     enhanceDateInputs();
     
+    // Process additional occupant DOB fields for manual text entry
+    processAdditionalOccupantDOB();
+    
     // Set up a mutation observer to monitor for dynamically added date inputs
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
@@ -158,6 +216,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const dateInputs = mutation.target.querySelectorAll('input[type="date"]:not(.enhanced)');
                 if (dateInputs.length > 0) {
                     enhanceDateInputs();
+                }
+                
+                // Process any newly added additional occupant DOB fields
+                const additionalDOBInputs = mutation.target.querySelectorAll('.additional-dob');
+                if (additionalDOBInputs.length > 0) {
+                    processAdditionalOccupantDOB();
                 }
             }
         });
@@ -200,7 +264,7 @@ function setupEventListeners() {
                 selfEmployedSection.style.display = 'block';
                 selfEmployedReferences.style.display = 'block';
                 document.getElementById('accountantReference').setAttribute('required', '');
-            } else if (this.value === 'Not working') {
+            } else if (this.value === 'Not working' || this.value === 'Domestic worker/House wife') {
                 notWorkingSection.style.display = 'block';
                 if (notWorkingReferences) {
                     notWorkingReferences.style.display = 'block';
@@ -240,7 +304,7 @@ function addApplicant() {
     newRow.className = 'applicant-row';
     newRow.innerHTML = `
         <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
-        <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]" class="enhanced">
+        <input type="text" placeholder="Date of Birth (DD/MM/YYYY)" name="Additional_Applicant_DOB[]" class="manual-date-input additional-dob">
         <select name="Additional_Applicant_Type[]">
             <option value="">-- Select Type --</option>
             <option value="tenant">Tenant (adult on tenancy agreement)</option>
@@ -254,11 +318,8 @@ function addApplicant() {
     `;
     container.appendChild(newRow);
     
-    // Find and enhance the new date input
-    const newDateInput = newRow.querySelector('input[type="date"]');
-    if (newDateInput) {
-        enhanceDateInputs();
-    }
+    // Process the new additional DOB field
+    processAdditionalOccupantDOB();
 }
 
 function removeApplicant(button) {
@@ -320,16 +381,16 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
             document.getElementById('accountantReferenceError').textContent = 'Accountant reference is required for self-employed applicants';
             isValid = false;
         }
-    } else if (employmentStatus === 'Not working') {
-        // Validate character reference for non-working
+    } else if (employmentStatus === 'Not working' || employmentStatus === 'Domestic worker/House wife') {
+        // Validate character reference for non-working or house wife
         if (document.getElementById('characterReference') && 
             document.getElementById('characterReference').hasAttribute('required') && 
             !document.getElementById('characterReference').value.trim()) {
             document.getElementById('characterReferenceError').textContent = 'Character reference is required';
             isValid = false;
         }
-    } else if (employmentStatus && employmentStatus !== 'Not working') {
-        // Validate employer reference for other employment statuses (except Not working)
+    } else if (employmentStatus && employmentStatus !== 'Not working' && employmentStatus !== 'Domestic worker/House wife') {
+        // Validate employer reference for other employment statuses
         if (document.getElementById('employerReference').hasAttribute('required') && 
             !document.getElementById('employerReference').value.trim()) {
             document.getElementById('employerReferenceError').textContent = 'Employer reference is required';
@@ -366,6 +427,24 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
         document.getElementById('emailError').textContent = 'Please enter a valid email address';
         isValid = false;
     }
+
+    // Validate additional occupant DOB fields
+    const additionalDOBInputs = document.querySelectorAll('.additional-dob');
+    additionalDOBInputs.forEach(input => {
+        if (input.value && !isValidDateFormat(input.value)) {
+            input.style.borderColor = 'red';
+            // Create or update error message if not already present
+            let errorMsg = input.parentNode.querySelector('.dob-error');
+            if (!errorMsg) {
+                errorMsg = document.createElement('small');
+                errorMsg.className = 'dob-error';
+                errorMsg.style.color = 'red';
+                input.parentNode.insertBefore(errorMsg, input.nextSibling);
+            }
+            errorMsg.textContent = 'Please use DD/MM/YYYY format';
+            isValid = false;
+        }
+    });
 
     // Prevent form submission if validation fails
     if (!isValid) {
