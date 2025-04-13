@@ -1,4 +1,4 @@
-/// Show/hide sections based on selections
+// Show/hide sections based on selections
 document.querySelectorAll('input[name="Employment_Status"]').forEach(radio => {
     radio.addEventListener('change', function() {
         const selfEmployedSection = document.getElementById('selfEmployedSection');
@@ -142,6 +142,12 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
     // Consent checkbox validation
     if (!document.getElementById('consentCheck').checked) {
         document.getElementById('consentCheckError').textContent = 'You must provide consent to proceed';
+        isValid = false;
+    }
+    
+    // Email notice consent validation
+    if (!document.getElementById('emailConsentCheck').checked) {
+        document.getElementById('emailConsentCheckError').textContent = 'You must consent to receive legal notices by email';
         isValid = false;
     }
 

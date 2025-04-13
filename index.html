@@ -68,7 +68,7 @@
             <input type="number" id="currentRent" name="Current_Rent_Monthly" placeholder="£ per month">
         </div>
         <div class="form-group">
-            <label for="landlordContact" class="required-field">Current Landlord/Agent Contact (Name & Number):</label>
+            <label for="landlordContact" class="required-field">Current Landlord/Agent Name & Contact Details:</label>
             <input type="text" id="landlordContact" name="Current_Landlord_Contact" required>
             <div class="error" id="landlordContactError"></div>
         </div>
@@ -188,24 +188,27 @@
 
         <h2>7. References</h2>
         <div class="form-group">
-            <label for="landlordReference" class="required-field">Landlord Reference (current or most recent):</label>
+            <label for="landlordReference" class="required-field">Landlord Reference (for character reference purposes):</label>
             <input type="text" id="landlordReference" name="Landlord_Reference" required>
             <div class="error" id="landlordReferenceError"></div>
+            <small>Please provide the name and contact details of someone who can verify your history as a tenant.</small>
         </div>
         
         <div id="employedReferences">
             <div class="form-group">
-                <label for="employerReference" class="required-field">Employer Reference (current or most recent):</label>
+                <label for="employerReference" class="required-field">Employer Reference (for income verification):</label>
                 <input type="text" id="employerReference" name="Employer_Reference" required>
                 <div class="error" id="employerReferenceError"></div>
+                <small>Please provide the name and contact details of someone who can verify your employment and income.</small>
             </div>
         </div>
         
         <div id="selfEmployedReferences" style="display: none;">
             <div class="form-group">
-                <label for="accountantReference" class="required-field">Accountant Reference:</label>
+                <label for="accountantReference" class="required-field">Accountant Reference (for income verification):</label>
                 <input type="text" id="accountantReference" name="Accountant_Reference">
                 <div class="error" id="accountantReferenceError"></div>
+                <small>Please provide the name and contact details of your accountant who can verify your self-employed income.</small>
             </div>
         </div>
 
@@ -254,6 +257,19 @@
                 <label class="checkbox-label required-field" for="consentCheck">I declare that the information provided is true and accurate. I give consent for my details to be used for reference, credit checks, and Right to Rent verification as required by UK law.</label>
             </div>
             <div class="error" id="consentCheckError"></div>
+        </div>
+        
+        <div class="form-group">
+            <div class="checkbox-group">
+                <input type="checkbox" id="emailConsentCheck" name="Email_Notice_Consent" required>
+                <label class="checkbox-label required-field" for="emailConsentCheck">I consent to receive all legally required notices and documents by email at the email address provided.</label>
+            </div>
+            <div class="error" id="emailConsentCheckError"></div>
+        </div>
+
+        <div class="notice">
+            <h3>Consent to Receive Notices by Email</h3>
+            <p>By submitting this application, you confirm that if your application is successful and you become a tenant, you consent to receive all legally required notices and documents by email. This includes rent increase notices, the "How to Rent" guide, the Gas Safety Certificate, the Energy Performance Certificate, and the Prescribed Information relating to any government-approved tenancy deposit scheme. The email address you provide in this application will be treated as valid for the purpose of serving these notices and documents.</p>
         </div>
 
         <div class="notice">
