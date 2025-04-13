@@ -42,6 +42,146 @@ document.querySelectorAll('input[name="Has_Pets"]').forEach(radio => {
     });
 });
 
+// Enhanced date picker for mobile
+function enhanceDatePicker() {
+    const dobInput = document.getElementById('dob');
+    
+    // Create year dropdown
+    const yearSelect = document.createElement('select');
+    yearSelect.id = 'year-select';
+    yearSelect.className = 'date-picker-helper';
+    
+    // Add a default option
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = '-- Select Birth Year --';
+    yearSelect.appendChild(defaultOption);
+    
+    // Add options for years (1930 to current year - 18)
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear - 18; year >= 1930; year--) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    }
+    
+    // Create month dropdown
+    const monthSelect = document.createElement('select');
+    monthSelect.id = 'month-select';
+    monthSelect.className = 'date-picker-helper';
+    monthSelect.disabled = true; // Disabled until year is selected
+    
+    // Add a default option
+    const defaultMonthOption = document.createElement('option');
+    defaultMonthOption.value = '';
+    defaultMonthOption.textContent = '-- Select Month --';
+    monthSelect.appendChild(defaultMonthOption);
+    
+    // Add month options
+    const months = [
+        'January', 'February', 'March', 'April', 'May', 'June', 
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    
+    months.forEach((month, index) => {
+        const option = document.createElement('option');
+        // Month is 0-based in JS Date, but we need 1-based for date input
+        option.value = (index + 1).toString().padStart(2, '0');
+        option.textContent = month;
+        monthSelect.appendChild(option);
+    });
+    
+    // Create day dropdown
+    const daySelect = document.createElement('select');
+    daySelect.id = 'day-select';
+    daySelect.className = 'date-picker-helper';
+    daySelect.disabled = true; // Disabled until month is selected
+    
+    // Add a default option
+    const defaultDayOption = document.createElement('option');
+    defaultDayOption.value = '';
+    defaultDayOption.textContent = '-- Select Day --';
+    daySelect.appendChild(defaultDayOption);
+    
+    // Add day options (will be populated based on month/year)
+    function updateDays(year, month) {
+        // Clear existing options except default
+        while (daySelect.options.length > 1) {
+            daySelect.options.remove(1);
+        }
+        
+        if (!year || !month) return;
+        
+        // Determine number of days in the selected month/year
+        const daysInMonth = new Date(year, month, 0).getDate();
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const option = document.createElement('option');
+            option.value = day.toString().padStart(2, '0');
+            option.textContent = day;
+            daySelect.appendChild(option);
+        }
+    }
+    
+    // Create a container for the selects
+    const dateSelectsContainer = document.createElement('div');
+    dateSelectsContainer.className = 'date-selects-container';
+    dateSelectsContainer.appendChild(yearSelect);
+    dateSelectsContainer.appendChild(monthSelect);
+    dateSelectsContainer.appendChild(daySelect);
+    
+    // Insert before the date input
+    dobInput.parentNode.insertBefore(dateSelectsContainer, dobInput);
+    
+    // Add helper text
+    const helperText = document.createElement('div');
+    helperText.innerHTML = '<small>Select year, month, and day to set your date of birth</small>';
+    dobInput.parentNode.insertBefore(helperText, dobInput);
+    
+    // Hide the native date input on mobile
+    dobInput.style.display = 'none';
+    
+    // Set up event handlers
+    yearSelect.addEventListener('change', function() {
+        const selectedYear = this.value;
+        if (selectedYear) {
+            monthSelect.disabled = false;
+            updateDate();
+        } else {
+            monthSelect.disabled = true;
+            daySelect.disabled = true;
+        }
+    });
+    
+    monthSelect.addEventListener('change', function() {
+        const selectedMonth = this.value;
+        const selectedYear = yearSelect.value;
+        
+        if (selectedMonth && selectedYear) {
+            daySelect.disabled = false;
+            updateDays(selectedYear, selectedMonth);
+            updateDate();
+        } else {
+            daySelect.disabled = true;
+        }
+    });
+    
+    daySelect.addEventListener('change', function() {
+        updateDate();
+    });
+    
+    function updateDate() {
+        const year = yearSelect.value;
+        const month = monthSelect.value;
+        const day = daySelect.value;
+        
+        if (year && month && day) {
+            dobInput.value = `${year}-${month}-${day}`;
+        }
+    }
+}
+
 // Initially hide sections
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('selfEmployedSection').style.display = 'none';
@@ -50,9 +190,169 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('occupantsSection').style.display = 'none';
     document.getElementById('petsSection').style.display = 'none';
     
-    // Set up event listeners again to ensure they're properly attached
+    // Set up event listeners to ensure they're properly attached
     setupEventListeners();
+    
+    // Initialize enhanced date picker
+    enhanceDatePicker();
+    
+    // Also add enhanced date picker for other date fields
+    enhanceDatePickerForField('startDate');
+    
+    // Handle any additional applicant date fields that might be added
+    const additionalApplicantsSection = document.getElementById('additionalApplicants');
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList') {
+                const dateInputs = mutation.target.querySelectorAll('input[type="date"]');
+                dateInputs.forEach(input => {
+                    if (!input.classList.contains('enhanced-date')) {
+                        enhanceDatePickerForExistingInput(input);
+                    }
+                });
+            }
+        });
+    });
+    observer.observe(additionalApplicantsSection, { childList: true, subtree: true });
 });
+
+// Helper function to enhance date pickers for any other date fields
+function enhanceDatePickerForField(fieldId) {
+    const dateInput = document.getElementById(fieldId);
+    if (dateInput) {
+        enhanceDatePickerForExistingInput(dateInput);
+    }
+}
+
+function enhanceDatePickerForExistingInput(dateInput) {
+    // Mark this input as enhanced to avoid duplicate enhancement
+    dateInput.classList.add('enhanced-date');
+    
+    // Create year dropdown
+    const yearSelect = document.createElement('select');
+    yearSelect.className = 'date-picker-helper';
+    
+    // Add a default option
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.textContent = '-- Select Year --';
+    yearSelect.appendChild(defaultOption);
+    
+    // Add options for years
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= currentYear - 100; year--) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    }
+    
+    // Create month dropdown
+    const monthSelect = document.createElement('select');
+    monthSelect.className = 'date-picker-helper';
+    monthSelect.disabled = true; // Disabled until year is selected
+    
+    // Add a default option
+    const defaultMonthOption = document.createElement('option');
+    defaultMonthOption.value = '';
+    defaultMonthOption.textContent = '-- Select Month --';
+    monthSelect.appendChild(defaultMonthOption);
+    
+    // Add month options
+    const months = [
+        'January', 'February', 'March', 'April', 'May', 'June', 
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    
+    months.forEach((month, index) => {
+        const option = document.createElement('option');
+        option.value = (index + 1).toString().padStart(2, '0');
+        option.textContent = month;
+        monthSelect.appendChild(option);
+    });
+    
+    // Create day dropdown
+    const daySelect = document.createElement('select');
+    daySelect.className = 'date-picker-helper';
+    daySelect.disabled = true; // Disabled until month is selected
+    
+    // Add a default option
+    const defaultDayOption = document.createElement('option');
+    defaultDayOption.value = '';
+    defaultDayOption.textContent = '-- Select Day --';
+    daySelect.appendChild(defaultDayOption);
+    
+    function updateDays(year, month) {
+        // Clear existing options except default
+        while (daySelect.options.length > 1) {
+            daySelect.options.remove(1);
+        }
+        
+        if (!year || !month) return;
+        
+        // Determine number of days in the selected month/year
+        const daysInMonth = new Date(year, month, 0).getDate();
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const option = document.createElement('option');
+            option.value = day.toString().padStart(2, '0');
+            option.textContent = day;
+            daySelect.appendChild(option);
+        }
+    }
+    
+    // Create a container for the selects
+    const dateSelectsContainer = document.createElement('div');
+    dateSelectsContainer.className = 'date-selects-container';
+    dateSelectsContainer.appendChild(yearSelect);
+    dateSelectsContainer.appendChild(monthSelect);
+    dateSelectsContainer.appendChild(daySelect);
+    
+    // Insert before the date input
+    dateInput.parentNode.insertBefore(dateSelectsContainer, dateInput);
+    
+    // Hide the native date input
+    dateInput.style.display = 'none';
+    
+    // Set up event handlers
+    yearSelect.addEventListener('change', function() {
+        const selectedYear = this.value;
+        if (selectedYear) {
+            monthSelect.disabled = false;
+            updateDate();
+        } else {
+            monthSelect.disabled = true;
+            daySelect.disabled = true;
+        }
+    });
+    
+    monthSelect.addEventListener('change', function() {
+        const selectedMonth = this.value;
+        const selectedYear = yearSelect.value;
+        
+        if (selectedMonth && selectedYear) {
+            daySelect.disabled = false;
+            updateDays(selectedYear, selectedMonth);
+            updateDate();
+        } else {
+            daySelect.disabled = true;
+        }
+    });
+    
+    daySelect.addEventListener('change', function() {
+        updateDate();
+    });
+    
+    function updateDate() {
+        const year = yearSelect.value;
+        const month = monthSelect.value;
+        const day = daySelect.value;
+        
+        if (year && month && day) {
+            dateInput.value = `${year}-${month}-${day}`;
+        }
+    }
+}
 
 function setupEventListeners() {
     // Re-attach employment status listeners
@@ -109,7 +409,7 @@ function addApplicant() {
     newRow.className = 'applicant-row';
     newRow.innerHTML = `
         <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
-        <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]">
+        <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]" class="enhanced-date">
         <select name="Additional_Applicant_Type[]">
             <option value="">-- Select Type --</option>
             <option value="tenant">Tenant (adult on tenancy agreement)</option>
@@ -122,6 +422,10 @@ function addApplicant() {
         <button type="button" class="remove-btn" onclick="removeApplicant(this)">Remove</button>
     `;
     container.appendChild(newRow);
+    
+    // Enhance the new date input
+    const newDateInput = newRow.querySelector('input[type="date"]');
+    enhanceDatePickerForExistingInput(newDateInput);
 }
 
 function removeApplicant(button) {
