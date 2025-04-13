@@ -1,5 +1,5 @@
 // Show/hide sections based on selections
-document.querySelectorAll('input[name="Employment_Status"]').forEach(radio => {
+document.querySelectorAll('input[name="Employment Status"]').forEach(radio => {
     radio.addEventListener('change', function() {
         const selfEmployedSection = document.getElementById('selfEmployedSection');
         const employedSection = document.getElementById('employedSection');
@@ -28,14 +28,14 @@ document.querySelectorAll('input[name="Employment_Status"]').forEach(radio => {
     });
 });
 
-document.querySelectorAll('input[name="Additional_Occupants"]').forEach(radio => {
+document.querySelectorAll('input[name="Additional Occupants"]').forEach(radio => {
     radio.addEventListener('change', function() {
         document.getElementById('occupantsSection').style.display = 
             this.value === 'Yes' ? 'block' : 'none';
     });
 });
 
-document.querySelectorAll('input[name="Has_Pets"]').forEach(radio => {
+document.querySelectorAll('input[name="Has Pets"]').forEach(radio => {
     radio.addEventListener('change', function() {
         document.getElementById('petsSection').style.display = 
             this.value === 'Yes' ? 'block' : 'none';
@@ -57,17 +57,17 @@ function addApplicant() {
     const newRow = document.createElement('div');
     newRow.className = 'applicant-row';
     newRow.innerHTML = `
-        <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
-        <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]">
-        <select name="Additional_Applicant_Type[]">
+        <input type="text" placeholder="Full Name" name="Additional Applicant Name[]">
+        <input type="date" placeholder="Date of Birth" name="Additional Applicant DOB[]">
+        <select name="Additional Applicant Type[]">
             <option value="">-- Select Type --</option>
             <option value="tenant">Tenant (adult on tenancy agreement)</option>
             <option value="permitted_adult">Permitted Occupier (adult)</option>
             <option value="permitted_child">Permitted Occupier (child under 18)</option>
         </select>
-        <input type="email" placeholder="Email (if applicable)" name="Additional_Applicant_Email[]">
-        <input type="tel" placeholder="Phone (if applicable)" name="Additional_Applicant_Phone[]">
-        <input type="text" placeholder="Relationship to Main Applicant" name="Relationship_to_Main_Applicant[]">
+        <input type="email" placeholder="Email (if applicable)" name="Additional Applicant Email[]">
+        <input type="tel" placeholder="Phone (if applicable)" name="Additional Applicant Phone[]">
+        <input type="text" placeholder="Relationship to Main Applicant" name="Relationship to Main Applicant[]">
         <button type="button" class="remove-btn" onclick="removeApplicant(this)">Remove</button>
     `;
     container.appendChild(newRow);
@@ -109,10 +109,10 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
 
     // Radio button validation
     const radioGroups = [
-        { name: 'Employment_Status', error: 'employmentStatusError', message: 'Please select an employment status' },
-        { name: 'Additional_Occupants', error: 'additionalOccupantsError', message: 'Please indicate if there are additional occupants' },
-        { name: 'Has_Pets', error: 'hasPetsError', message: 'Please indicate if you have pets' },
-        { name: 'Right_to_Rent_in_UK', error: 'rightToRentError', message: 'Please indicate your Right to Rent status' }
+        { name: 'Employment Status', error: 'employmentStatusError', message: 'Please select an employment status' },
+        { name: 'Additional Occupants', error: 'additionalOccupantsError', message: 'Please indicate if there are additional occupants' },
+        { name: 'Has Pets', error: 'hasPetsError', message: 'Please indicate if you have pets' },
+        { name: 'Right to Rent in UK', error: 'rightToRentError', message: 'Please indicate your Right to Rent status' }
     ];
 
     radioGroups.forEach(group => {
@@ -124,7 +124,7 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
     });
 
     // Conditional field validation
-    const employmentStatus = document.querySelector('input[name="Employment_Status"]:checked')?.value;
+    const employmentStatus = document.querySelector('input[name="Employment Status"]:checked')?.value;
     if (employmentStatus === 'Self-employed') {
         // Validate accountant reference for self-employed
         if (!document.getElementById('accountantReference').value.trim()) {
@@ -152,9 +152,9 @@ document.getElementById('tenancyForm').addEventListener('submit', function(e) {
     }
 
     // Right to rent document validation
-    const rightToRentValue = document.querySelector('input[name="Right_to_Rent_in_UK"]:checked')?.value;
+    const rightToRentValue = document.querySelector('input[name="Right to Rent in UK"]:checked')?.value;
     if (rightToRentValue === 'Yes') {
-        const documents = document.querySelectorAll('input[name="Right_to_Rent_Documents"]:checked');
+        const documents = document.querySelectorAll('input[name="Right to Rent Documents"]:checked');
         if (documents.length === 0) {
             document.getElementById('rightToRentDocumentsError').textContent = 'Please select at least one document type';
             isValid = false;
@@ -187,10 +187,10 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function() {
         const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         checkboxes.forEach(checkbox => {
-            if (checkbox.name === 'Right_to_Rent_Documents') {
+            if (checkbox.name === 'Right to Rent Documents') {
                 const hiddenField = document.createElement('input');
                 hiddenField.type = 'hidden';
-                hiddenField.name = 'Selected_Documents[]';
+                hiddenField.name = 'Selected Documents[]';
                 hiddenField.value = checkbox.value;
                 form.appendChild(hiddenField);
             }

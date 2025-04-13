@@ -23,22 +23,23 @@
         <h2>1. Applicant Details</h2>
         <div class="form-group">
             <label for="fullName" class="required-field">Full Name:</label>
-            <input type="text" id="fullName" name="Full_Name" required>
+            <input type="text" id="fullName" name="Full Name" required>
             <div class="error" id="fullNameError"></div>
         </div>
         <div class="form-group">
             <label for="dob" class="required-field">Date of Birth:</label>
-            <input type="date" id="dob" name="Date_of_Birth" required>
+            <input type="date" id="dob" name="Date of Birth" required max="2007-01-01">
             <div class="error" id="dobError"></div>
+            <small>For older dates that are difficult to select on mobile, you can type the date directly in YYYY-MM-DD format</small>
         </div>
         <div class="form-group">
             <label for="contactNumber" class="required-field">Contact Number:</label>
-            <input type="tel" id="contactNumber" name="Contact_Number" required>
+            <input type="tel" id="contactNumber" name="Contact Number" required>
             <div class="error" id="contactNumberError"></div>
         </div>
         <div class="form-group">
             <label for="email" class="required-field">Email Address:</label>
-            <input type="email" id="email" name="Email_Address" required>
+            <input type="email" id="email" name="Email Address" required>
             <div class="error" id="emailError"></div>
         </div>
         <div class="form-group">
@@ -50,26 +51,26 @@
         <h2>2. Current Address</h2>
         <div class="form-group">
             <label for="currentAddress" class="required-field">Address:</label>
-            <textarea id="currentAddress" name="Current_Address" rows="3" required></textarea>
+            <textarea id="currentAddress" name="Current Address" rows="3" required></textarea>
             <div class="error" id="currentAddressError"></div>
         </div>
         <div class="form-group">
             <label for="timeAtAddress" class="required-field">Time at this address (years/months):</label>
-            <input type="text" id="timeAtAddress" name="Time_at_Address" placeholder="e.g., 2 years, 6 months" required>
+            <input type="text" id="timeAtAddress" name="Time at Address" placeholder="e.g., 2 years, 6 months" required>
             <div class="error" id="timeAtAddressError"></div>
         </div>
         <div class="form-group">
             <label for="reasonForLeaving" class="required-field">Reason for leaving:</label>
-            <input type="text" id="reasonForLeaving" name="Reason_for_Leaving" required>
+            <input type="text" id="reasonForLeaving" name="Reason for Leaving" required>
             <div class="error" id="reasonForLeavingError"></div>
         </div>
         <div class="form-group">
             <label for="currentRent">Current rent (if applicable):</label>
-            <input type="number" id="currentRent" name="Current_Rent_Monthly" placeholder="£ per month">
+            <input type="number" id="currentRent" name="Current Rent Monthly" placeholder="£ per month">
         </div>
         <div class="form-group">
             <label for="landlordContact" class="required-field">Current Landlord/Agent Name & Contact Details:</label>
-            <input type="text" id="landlordContact" name="Current_Landlord_Contact" required>
+            <input type="text" id="landlordContact" name="Current Landlord Contact" required>
             <div class="error" id="landlordContactError"></div>
         </div>
 
@@ -77,10 +78,10 @@
         <div class="form-group">
             <label class="required-field">Employment Status:</label>
             <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="Employment_Status" value="Full-time" required> Full-time</label>
-                <label class="radio-label"><input type="radio" name="Employment_Status" value="Part-time"> Part-time</label>
-                <label class="radio-label"><input type="radio" name="Employment_Status" value="Self-employed"> Self-employed</label>
-                <label class="radio-label"><input type="radio" name="Employment_Status" value="Student"> Student</label>
+                <label class="radio-label"><input type="radio" name="Employment Status" value="Full-time" required> Full-time</label>
+                <label class="radio-label"><input type="radio" name="Employment Status" value="Part-time"> Part-time</label>
+                <label class="radio-label"><input type="radio" name="Employment Status" value="Self-employed"> Self-employed</label>
+                <label class="radio-label"><input type="radio" name="Employment Status" value="Student"> Student</label>
             </div>
             <div class="error" id="employmentStatusError"></div>
         </div>
@@ -88,38 +89,38 @@
         <div id="employedSection">
             <div class="form-group">
                 <label for="employerName">Employer Name:</label>
-                <input type="text" id="employerName" name="Employer_Name">
+                <input type="text" id="employerName" name="Employer Name">
             </div>
             <div class="form-group">
                 <label for="jobTitle">Job Title:</label>
-                <input type="text" id="jobTitle" name="Job_Title">
+                <input type="text" id="jobTitle" name="Job Title">
             </div>
             <div class="form-group">
                 <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate" name="Employment_Start_Date">
+                <input type="date" id="startDate" name="Employment Start Date">
             </div>
             <div class="form-group">
                 <label for="salary">Salary (£ per annum):</label>
-                <input type="number" id="salary" name="Annual_Salary" step="1">
+                <input type="number" id="salary" name="Annual Salary" step="1">
             </div>
             <div class="form-group">
                 <label for="employerContact">Employer Contact:</label>
-                <input type="text" id="employerContact" name="Employer_Contact">
+                <input type="text" id="employerContact" name="Employer Contact">
             </div>
         </div>
 
         <div id="selfEmployedSection" style="display: none;">
             <div class="form-group">
                 <label for="businessNature">Nature of Business:</label>
-                <input type="text" id="businessNature" name="Business_Nature">
+                <input type="text" id="businessNature" name="Business Nature">
             </div>
             <div class="form-group">
                 <label for="accountantContact">Accountant's Contact (if applicable):</label>
-                <input type="text" id="accountantContact" name="Accountant_Contact">
+                <input type="text" id="accountantContact" name="Accountant Contact">
             </div>
             <div class="form-group">
                 <label for="annualIncome">Annual Income (last 2 years):</label>
-                <input type="text" id="annualIncome" name="Annual_Income_Self_Employed">
+                <input type="text" id="annualIncome" name="Annual Income Self Employed">
             </div>
             <div class="form-group">
                 <label>Please attach recent tax returns or SA302s if available (you can email these separately).</label>
@@ -129,27 +130,27 @@
         <h2>4. Guarantor (if applicable)</h2>
         <div class="form-group">
             <label for="guarantorName">Full Name:</label>
-            <input type="text" id="guarantorName" name="Guarantor_Name">
+            <input type="text" id="guarantorName" name="Guarantor Name">
         </div>
         <div class="form-group">
             <label for="guarantorAddress">Address:</label>
-            <textarea id="guarantorAddress" name="Guarantor_Address" rows="3"></textarea>
+            <textarea id="guarantorAddress" name="Guarantor Address" rows="3"></textarea>
         </div>
         <div class="form-group">
             <label for="guarantorIncome">Annual Income (£):</label>
-            <input type="number" id="guarantorIncome" name="Guarantor_Annual_Income">
+            <input type="number" id="guarantorIncome" name="Guarantor Annual Income">
         </div>
         <div class="form-group">
             <label for="guarantorContact">Contact Number:</label>
-            <input type="tel" id="guarantorContact" name="Guarantor_Contact_Number">
+            <input type="tel" id="guarantorContact" name="Guarantor Contact Number">
         </div>
 
         <h2>5. Additional Occupants</h2>
         <div class="form-group">
             <label class="required-field">Will anyone else live in the property with you?</label>
             <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="Additional_Occupants" value="Yes" required> Yes</label>
-                <label class="radio-label"><input type="radio" name="Additional_Occupants" value="No"> No</label>
+                <label class="radio-label"><input type="radio" name="Additional Occupants" value="Yes" required> Yes</label>
+                <label class="radio-label"><input type="radio" name="Additional Occupants" value="No"> No</label>
             </div>
             <div class="error" id="additionalOccupantsError"></div>
         </div>
@@ -159,11 +160,11 @@
                 <div class="occupant-counts">
                     <div>
                         <label for="adultCount">Number of adults (18+):</label>
-                        <input type="number" id="adultCount" name="Number_of_Adults" min="1" value="1">
+                        <input type="number" id="adultCount" name="Number of Adults" min="1" value="1">
                     </div>
                     <div>
                         <label for="childrenCount">Number of children (under 18):</label>
-                        <input type="number" id="childrenCount" name="Number_of_Children" min="0" value="0">
+                        <input type="number" id="childrenCount" name="Number of Children" min="0" value="0">
                     </div>
                 </div>
                 <div class="error" id="occupantCountError"></div>
@@ -174,22 +175,22 @@
         <div class="form-group">
             <label class="required-field">Do you have any pets?</label>
             <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="Has_Pets" value="Yes" required> Yes</label>
-                <label class="radio-label"><input type="radio" name="Has_Pets" value="No"> No</label>
+                <label class="radio-label"><input type="radio" name="Has Pets" value="Yes" required> Yes</label>
+                <label class="radio-label"><input type="radio" name="Has Pets" value="No"> No</label>
             </div>
             <div class="error" id="hasPetsError"></div>
         </div>
         <div id="petsSection" style="display: none;">
             <div class="form-group">
                 <label for="petDetails">Please provide brief details:</label>
-                <input type="text" id="petDetails" name="Pet_Details">
+                <input type="text" id="petDetails" name="Pet Details">
             </div>
         </div>
 
         <h2>7. References</h2>
         <div class="form-group">
             <label for="landlordReference" class="required-field">Landlord Reference (for character reference purposes):</label>
-            <input type="text" id="landlordReference" name="Landlord_Reference" required>
+            <input type="text" id="landlordReference" name="Landlord Reference" required>
             <div class="error" id="landlordReferenceError"></div>
             <small>Please provide the name and contact details of someone who can verify your history as a tenant.</small>
         </div>
@@ -197,7 +198,7 @@
         <div id="employedReferences">
             <div class="form-group">
                 <label for="employerReference" class="required-field">Employer Reference (for income verification):</label>
-                <input type="text" id="employerReference" name="Employer_Reference" required>
+                <input type="text" id="employerReference" name="Employer Reference" required>
                 <div class="error" id="employerReferenceError"></div>
                 <small>Please provide the name and contact details of someone who can verify your employment and income.</small>
             </div>
@@ -206,7 +207,7 @@
         <div id="selfEmployedReferences" style="display: none;">
             <div class="form-group">
                 <label for="accountantReference" class="required-field">Accountant Reference (for income verification):</label>
-                <input type="text" id="accountantReference" name="Accountant_Reference">
+                <input type="text" id="accountantReference" name="Accountant Reference">
                 <div class="error" id="accountantReferenceError"></div>
                 <small>Please provide the name and contact details of your accountant who can verify your self-employed income.</small>
             </div>
@@ -216,33 +217,33 @@
         <div class="form-group">
             <label class="required-field">Do you have the legal Right to Rent in the UK?</label>
             <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="Right_to_Rent_in_UK" value="Yes" required> Yes</label>
-                <label class="radio-label"><input type="radio" name="Right_to_Rent_in_UK" value="No"> No</label>
+                <label class="radio-label"><input type="radio" name="Right to Rent in UK" value="Yes" required> Yes</label>
+                <label class="radio-label"><input type="radio" name="Right to Rent in UK" value="No"> No</label>
             </div>
             <div class="error" id="rightToRentError"></div>
         </div>
         <div class="form-group">
             <label>Please indicate which documents you can provide for the Right to Rent check:</label>
             <div class="checkbox-group">
-                <input type="checkbox" id="ukPassport" name="Right_to_Rent_Documents" value="UK/EEA/Swiss Passport">
+                <input type="checkbox" id="ukPassport" name="Right to Rent Documents" value="UK/EEA/Swiss Passport">
                 <label class="checkbox-label" for="ukPassport">UK/EEA/Swiss Passport</label>
             </div>
             <div class="checkbox-group">
-                <input type="checkbox" id="ukBirth" name="Right_to_Rent_Documents" value="UK Birth Certificate + Photo ID">
+                <input type="checkbox" id="ukBirth" name="Right to Rent Documents" value="UK Birth Certificate + Photo ID">
                 <label class="checkbox-label" for="ukBirth">UK Birth Certificate + Photo ID</label>
             </div>
             <div class="checkbox-group">
-                <input type="checkbox" id="brp" name="Right_to_Rent_Documents" value="Biometric Residence Permit (BRP)">
+                <input type="checkbox" id="brp" name="Right to Rent Documents" value="Biometric Residence Permit (BRP)">
                 <label class="checkbox-label" for="brp">Biometric Residence Permit (BRP)</label>
             </div>
             <div class="checkbox-group">
-                <input type="checkbox" id="immigrationDoc" name="Right_to_Rent_Documents" value="Immigration Status Document">
+                <input type="checkbox" id="immigrationDoc" name="Right to Rent Documents" value="Immigration Status Document">
                 <label class="checkbox-label" for="immigrationDoc">Immigration Status Document</label>
             </div>
             <div class="checkbox-group">
-                <input type="checkbox" id="otherDoc" name="Right_to_Rent_Documents" value="Other">
+                <input type="checkbox" id="otherDoc" name="Right to Rent Documents" value="Other">
                 <label class="checkbox-label" for="otherDoc">Other (please specify):</label>
-                <input type="text" id="otherDocSpecify" name="Other_Document_Specification" style="width: 60%; margin-left: 10px;">
+                <input type="text" id="otherDocSpecify" name="Other Document Specification" style="width: 60%; margin-left: 10px;">
             </div>
             <div class="error" id="rightToRentDocumentsError"></div>
         </div>
@@ -253,7 +254,7 @@
         <h2>9. Consent & Declaration</h2>
         <div class="form-group">
             <div class="checkbox-group">
-                <input type="checkbox" id="consentCheck" name="Consent_Given" required>
+                <input type="checkbox" id="consentCheck" name="Consent Given" required>
                 <label class="checkbox-label required-field" for="consentCheck">I declare that the information provided is true and accurate. I give consent for my details to be used for reference, credit checks, and Right to Rent verification as required by UK law.</label>
             </div>
             <div class="error" id="consentCheckError"></div>
@@ -261,7 +262,7 @@
         
         <div class="form-group">
             <div class="checkbox-group">
-                <input type="checkbox" id="emailConsentCheck" name="Email_Notice_Consent" required>
+                <input type="checkbox" id="emailConsentCheck" name="Email Notice Consent" required>
                 <label class="checkbox-label required-field" for="emailConsentCheck">I consent to receive all legally required notices and documents by email at the email address provided.</label>
             </div>
             <div class="error" id="emailConsentCheckError"></div>
@@ -302,17 +303,17 @@
         <div id="additionalApplicants">
             <div class="additional-applicants">
                 <div class="applicant-row">
-                    <input type="text" placeholder="Full Name" name="Additional_Applicant_Name[]">
-                    <input type="date" placeholder="Date of Birth" name="Additional_Applicant_DOB[]">
-                    <select name="Additional_Applicant_Type[]">
+                    <input type="text" placeholder="Full Name" name="Additional Applicant Name[]">
+                    <input type="date" placeholder="Date of Birth" name="Additional Applicant DOB[]">
+                    <select name="Additional Applicant Type[]">
                         <option value="">-- Select Type --</option>
                         <option value="tenant">Tenant (adult on tenancy agreement)</option>
                         <option value="permitted_adult">Permitted Occupier (adult)</option>
                         <option value="permitted_child">Permitted Occupier (child under 18)</option>
                     </select>
-                    <input type="email" placeholder="Email (if applicable)" name="Additional_Applicant_Email[]">
-                    <input type="tel" placeholder="Phone (if applicable)" name="Additional_Applicant_Phone[]">
-                    <input type="text" placeholder="Relationship to Main Applicant" name="Relationship_to_Main_Applicant[]">
+                    <input type="email" placeholder="Email (if applicable)" name="Additional Applicant Email[]">
+                    <input type="tel" placeholder="Phone (if applicable)" name="Additional Applicant Phone[]">
+                    <input type="text" placeholder="Relationship to Main Applicant" name="Relationship to Main Applicant[]">
                     <button type="button" class="remove-btn" onclick="removeApplicant(this)">Remove</button>
                 </div>
             </div>
